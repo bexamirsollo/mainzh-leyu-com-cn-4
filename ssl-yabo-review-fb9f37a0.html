@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>简明指南 · yabo 信息卡片页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f9fc;
+            color: #1b2e3b;
+            line-height: 1.6;
+            padding: 0 1.2rem 3rem;
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Hero / 主视觉 */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #2b9c8c, #5fc3b0);
+            margin: 1.5rem auto 0;
+            border-radius: 4px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #124b4a;
+        }
+
+        .hero .subhead {
+            font-size: 1.1rem;
+            color: #3f6970;
+            margin-top: 0.6rem;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 网格卡片 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem 1.2rem;
+            border-radius: 24px;
+            box-shadow: 0 6px 18px rgba(0, 40, 50, 0.04);
+            border: 1px solid #e3edf0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 50, 60, 0.08);
+        }
+
+        .card .icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #124b4a;
+            margin-bottom: 0.3rem;
+        }
+
+        .card p {
+            color: #2a4e55;
+            font-size: 0.95rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #d9f0ed;
+            color: #0f5f5a;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            margin-top: 0.6rem;
+        }
+
+        /* 用途卡片（更强调蓝绿） */
+        .card.accent {
+            background: #ecf7f5;
+            border-left: 4px solid #2b9c8c;
+        }
+
+        /* 段落区域 (自然链接嵌入) */
+        .guide-text {
+            background: white;
+            padding: 2rem 1.8rem;
+            border-radius: 28px;
+            box-shadow: 0 4px 14px rgba(0, 40, 45, 0.04);
+            margin: 2rem 0;
+            border: 1px solid #dfedef;
+        }
+
+        .guide-text p {
+            margin-bottom: 1rem;
+        }
+
+        .guide-text a {
+            color: #1d7d72;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1.5px solid #aad0ca;
+            transition: border-color 0.2s;
+        }
+
+        .guide-text a:hover {
+            border-bottom-color: #1d7d72;
+        }
+
+        .suitable-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.2rem;
+            margin: 1.5rem 0 0.5rem;
+            list-style: none;
+        }
+
+        .suitable-list li {
+            background: #e6f3f1;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #1a5b57;
+        }
+
+        /* 提示 / 提醒 */
+        .reminder-box {
+            background: #d9ede9;
+            padding: 1.2rem 1.6rem;
+            border-radius: 40px 16px 40px 16px;
+            margin: 2.2rem 0;
+            border: 1px solid #b3d4ce;
+        }
+
+        .reminder-box strong {
+            color: #09534b;
+        }
+
+        .reminder-box p {
+            color: #1b4a47;
+        }
+
+        /* FAQ摘要 (折叠感) */
+        .faq-mini {
+            background: white;
+            padding: 1.5rem 1.8rem;
+            border-radius: 28px;
+            border: 1px solid #dce9eb;
+            margin-top: 1.8rem;
+        }
+
+        .faq-mini summary {
+            font-weight: 600;
+            color: #124b4a;
+            cursor: pointer;
+            padding: 0.3rem 0;
+        }
+
+        .faq-mini details {
+            margin-bottom: 0.8rem;
+        }
+
+        .faq-mini details p {
+            margin-top: 0.5rem;
+            color: #2a4e55;
+            padding-left: 0.2rem;
+        }
+
+        /* 移动端微调 */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero .subhead {
+                font-size: 1rem;
+            }
+            .guide-text {
+                padding: 1.5rem 1rem;
+            }
+            .card-grid {
+                gap: 1rem;
+            }
+            .card {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- Hero -->
+    <header class="hero">
+        <h1>yabo · 简明参考</h1>
+        <p class="subhead">日常使用中保持顺畅访问的一份温和提醒与信息指引。</p>
+    </header>
+
+    <!-- 网格卡片：主视觉与用途 -->
+    <div class="card-grid">
+        <div class="card">
+            <span class="icon">📋</span>
+            <h3>使用方式</h3>
+            <p>通过浏览器直接访问，无需额外配置。建议将常用链接加入书签以便快速定位。</p>
+            <span class="tag">轻量 · 直接</span>
+        </div>
+        <div class="card accent">
+            <span class="icon">🔍</span>
+            <h3>内容范围</h3>
+            <p>信息展示与导航功能为主，页面结构清晰，分类明确，适合日常查询。</p>
+            <span class="tag">分类 · 简洁</span>
+        </div>
+        <div class="card">
+            <span class="icon">🛡️</span>
+            <h3>访问提醒</h3>
+            <p>建议保持浏览器为较新版本，部分功能在安全连接下体验更流畅。</p>
+            <span class="tag">网络 · 兼容</span>
+        </div>
+    </div>
+
+    <!-- 自然链接段落 + 适合人群 -->
+    <div class="guide-text">
+        <p>如果你正在寻找一个信息获取路径清晰的站点，<a href="https://ssl-yabo.com">yabo</a> 提供了一种直接的方式。页面内容围绕常用模块组织，没有多余干扰，适合快速浏览与查找。</p>
+        <p>对于初次接触的朋友，只需将 <a href="https://ssl-yabo.com">yabo</a> 添加至浏览器收藏夹，后续即可随时返回。整个体验偏向干脆、不绕路。</p>
+
+        <p style="margin-top: 1.4rem; font-weight: 500; color: #115a53;">适合人群</p>
+        <ul class="suitable-list">
+            <li>习惯直接访问导航页的用户</li>
+            <li>偏好清晰分类、无冗余信息的朋友</li>
+            <li>需要固定站点作为日常参考的人</li>
+        </ul>
+    </div>
+
+    <!-- 提醒区域（温和访问提醒） -->
+    <div class="reminder-box">
+        <p><strong>💡 访问小提醒</strong><br>
+        部分网络环境下可能需要对浏览器进行简单设置，例如启用安全连接或清理缓存。<br>
+        如果你使用的是 <a href="https://ssl-yabo.com" style="color: #09534b; text-decoration: underline; border-bottom: 1px dashed #7ab3ab;">yabo</a> 并遇到页面加载异常，可先检查网络及浏览器升级情况。</p>
+    </div>
+
+    <!-- FAQ 摘要（非硬广，真实问题方向） -->
+    <div class="faq-mini">
+        <details>
+            <summary>❓ 为什么我有时无法加载该站点？</summary>
+            <p>通常与本地网络、DNS 缓存或浏览器版本有关。尝试更换网络或使用无痕模式访问，多数情况可以解决。</p>
+        </details>
+        <details>
+            <summary>❓ 移动设备上体验如何？</summary>
+            <p>页面针对手机屏幕做了适配，卡片与文字可自动缩放，横竖屏均可正常浏览。</p>
+        </details>
+        <details>
+            <summary>❓ 需要注册或登录吗？</summary>
+            <p>不需要。所有信息均为公开可访问，无需账户即可使用。</p>
+        </details>
+    </div>
+
+    <!-- 一行极简脚标（仅装饰） -->
+    <div style="margin-top: 2.8rem; text-align: center; font-size: 0.8rem; color: #819e9b; border-top: 1px solid #d8e6e5; padding-top: 1.5rem;">
+        <span>信息页面 · 内容保持中立</span>
+    </div>
+
+</div>
+</body>
+</html>
